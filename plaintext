@@ -1,0 +1,6 @@
+my-website/
+├── index.html
+├── styles/
+│   └── styles.css
+└── scripts/
+    └── main.js
