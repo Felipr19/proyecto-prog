@@ -1,6 +1,8 @@
 my-website/
-├── index.html
+├── Paginas/
+│   ├── index.html
+│   ├── orden.html
+│   └── scripts/
+│       └── main.js
 ├── styles/
 │   └── styles.css
-└── scripts/
-    └── main.js

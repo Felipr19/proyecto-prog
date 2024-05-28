@@ -17,30 +17,33 @@ mongoose.connect('mongodb://localhost:27017/mydatabase', {
 });
 
 // Define a schema
-const itemSchema = new mongoose.Schema({
+const ordenSchema = new mongoose.Schema({
   name: String,
-  description: String,
+  phone: String,
+  address: String,
 });
 
 // Define a model
-const Item = mongoose.model('Item', itemSchema);
+const Orden = mongoose.model('Orden', ordenSchema);
 
 // Routes
-app.get('/items', async (req, res) => {
-    console.log('solicitud recibida en /items')
+app.get('/orden', async (req, res) => {
+    console.log('solicitud recibida en /orden')
   try {
-    const items = await Item.find();
-    res.json(items);
+    const orden = await Orden.find();
+    res.json(orden);
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
 });
 
 // Ruta para manejar solicitudes POST a /items
-app.post('/items', async (req, res) => {
+app.post('/orden', async (req, res) => {
     try {
       const newItemData = req.body; // Datos del nuevo elemento enviados en el cuerpo de la solicitud
-      const newItem = await Item.create(newItemData); // Crear un nuevo elemento en la base de datos
+      console.log(newItemData); // Este es el console.log que mencionas
+      const newItem = await Orden.create(newItemData); // Crear un nuevo elemento en la base de datos
+      await newItem.save(); // Save the new item to the database
       res.status(201).json(newItem); // Enviar una respuesta con el nuevo elemento creado
     } catch (error) {
       res.status(500).json({ message: error.message }); // Enviar una respuesta de error si ocurre algún problema

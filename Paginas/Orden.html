@@ -56,7 +56,7 @@
 
     <div class="container">
         <h2>Formulario de Contacto</h2>
-        <form id="contactForm">
+        <form id="addItemForm">
             <label for="name">Nombre:</label>
             <input type="text" id="name" name="name" required>
 
@@ -70,29 +70,7 @@
         </form>
     </div>
 
-    <script>
-        document.getElementById('contactForm').addEventListener('submit', function(event) {
-            event.preventDefault(); // Evita que el formulario se envíe de la forma tradicional
-
-            // Captura los valores de los campos del formulario
-            const name = document.getElementById('name').value;
-            const phone = document.getElementById('phone').value;
-            const address = document.getElementById('address').value;
-
-            // Guarda los valores en variables
-            const formData = {
-                name: name,
-                phone: phone,
-                address: address
-            };
-
-            // Muestra los datos capturados en la consola (puedes reemplazar esto con la lógica que desees)
-            console.log('Datos del formulario:', formData);
-
-            // Aquí puedes agregar la lógica para enviar los datos a un servidor, etc.
-            // Por ejemplo, utilizando fetch() para hacer una solicitud POST
-        });
-    </script>
+    <script src="scripts/main.js"></script>
 
 </body>
 </html>
