@@ -12,12 +12,18 @@
     </header>
     <main>
         <section>
-            <h2>Sección 1</h2>
-            <p>Contenido de la sección 1.</p>
+            <h2>Elementos</h2>
+            <div id="itemsContainer"></div>
         </section>
         <section>
-            <h2>Sección 2</h2>
-            <p>Contenido de la sección 2.</p>
+            <h2>Añadir Nuevo Elemento</h2>
+            <form id="addItemForm">
+                <label for="name">Nombre:</label>
+                <input type="text" id="name" name="name" required>
+                <label for="description">Descripción:</label>
+                <input type="text" id="description" name="description" required>
+                <button type="submit">Añadir</button>
+            </form>
         </section>
     </main>
     <footer>
