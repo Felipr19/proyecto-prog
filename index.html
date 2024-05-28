@@ -3,26 +3,115 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mi Página Web</title>
-    <link rel="stylesheet" href="styles/styles.css">
+    <title>Kukerules</title>
+    <link rel="stylesheet" href="styles.css"> <!-- Enlace a un archivo CSS externo -->
+    <style>
+        /* Estilos básicos para el catálogo */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background-color: #4CAF50;
+            color: white;
+            padding: 15px;
+            text-align: center;
+        }
+        nav {
+            display: flex;
+            justify-content: center;
+            background-color: #333;
+        }
+        nav a {
+            padding: 14px 20px;
+            display: block;
+            color: white;
+            text-align: center;
+            text-decoration: none;
+        }
+        nav a:hover {
+            background-color: #ddd;
+            color: black;
+        }
+        .catalog-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin: 20px;
+        }
+        .product-card {
+            background-color: #f1f1f1;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin: 10px;
+            padding: 15px;
+            width: 200px;
+            text-align: center;
+        }
+        .product-card img {
+            max-width: 100%;
+            height: auto;
+        }
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            position: fixed;
+            width: 100%;
+            bottom: 0;
+        }
+    </style>
 </head>
 <body>
+
     <header>
-        <h1>Bienvenidos a Mi Página Web</h1>
+        <h1>Kukerules</h1>
     </header>
-    <main>
-        <section>
-            <h2>Sección 1</h2>
-            <p>Contenido de la sección 1.</p>
-        </section>
-        <section>
-            <h2>Sección 2</h2>
-            <p>Contenido de la sección 2.</p>
-        </section>
-    </main>
+
+    <nav>
+        <a href="#home">Inicio</a>
+        <a href="#products">Productos</a>
+        <a href="#contact">Contacto</a>
+    </nav>
+
+    <div class="catalog-container" id="products">
+        <!-- Tarjeta de producto de ejemplo -->
+        <div class="product-card">
+            <img src="img/Valent.png" alt="Producto 1">
+            <h2>Producto 1</h2>
+            <p>Descripción breve del producto.</p>
+            <p><strong>Precio: $10.00</strong></p>
+            <button>Comprar</button>
+        </div>
+        <div class="product-card">
+            <img src="img/Lemon.png" alt="Producto 2">
+            <h2>Producto 2</h2>
+            <p>Descripción breve del producto.</p>
+            <p><strong>Precio: $20.00</strong></p>
+            <button>Comprar</button>
+        </div>
+        <div class="product-card">
+            <img src="img/WhatsApp-Image-2024-03-18-at-9.36.11-PM.png" alt="Producto 1">
+            <h2>Producto 1</h2>
+            <p>Descripción breve del producto.</p>
+            <p><strong>Precio: $10.00</strong></p>
+            <button>Comprar</button>
+        </div>
+        <div class="product-card">
+            <img src="img/WhatsApp-Image-2024-03-18-at-9.36.12-PM.png" alt="Producto 2">
+            <h2>Producto 2</h2>
+            <p>Descripción breve del producto.</p>
+            <p><strong>Precio: $20.00</strong></p>
+            <button>Comprar</button>
+        </div>
+        <!-- Añade más tarjetas de productos aquí -->
+    </div>
+
     <footer>
-        <p>&copy; 2024 Mi Página Web</p>
+        <p>&copy; 2024 Catálogo de Compras. Todos los derechos reservados.</p>
     </footer>
-    <script src="scripts/main.js"></script>
+
 </body>
 </html>
