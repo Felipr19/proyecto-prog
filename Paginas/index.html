@@ -157,32 +157,6 @@
         <p>&copy; 2024 Catálogo de Compras. Todos los derechos reservados.</p>
     </footer>
 
-    <script>
-        let cart = [];
-
-        function addToCart(productName, productPrice) {
-            cart.push({ name: productName, price: productPrice });
-            updateCartList();
-        }
-
-        function updateCartList() {
-            const cartItems = document.getElementById('cart-items');
-            cartItems.innerHTML = '';
-            cart.forEach(item => {
-                const li = document.createElement('li');
-                li.textContent = `${item.name} - $${item.price.toFixed(2)}`;
-                cartItems.appendChild(li);
-            });
-        }
-
-        document.getElementById('cart-button').addEventListener('click', () => {
-            const cartList = document.getElementById('cart-list');
-            if (cartList.style.display === 'none' || cartList.style.display === '') {
-                cartList.style.display = 'block';
-            } else {
-                cartList.style.display = 'none';
-            }
-        });
-    </script>
+    <script src="scripts/main.js"></script>
 </body>
 </html>
