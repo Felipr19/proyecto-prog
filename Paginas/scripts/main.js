@@ -132,4 +132,5 @@ document.addEventListener('DOMContentLoaded', () => {
         const orderForm = document.getElementById('order-form');
         orderForm.style.display = 'none';
     });
+    
 });
