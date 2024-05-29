@@ -101,4 +101,35 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Hacer que addToCart esté disponible globalmente
     window.addToCart = addToCart;
+
+    document.getElementById('order-button').addEventListener('click', () => {
+        const orderForm = document.getElementById('order-form');
+        orderForm.style.display = 'block';
+    });
+
+    document.getElementById('contactForm').addEventListener('submit', function(event) {
+        event.preventDefault(); // Evita que el formulario se envíe de la forma tradicional
+
+        // Captura los valores de los campos del formulario
+        const name = document.getElementById('name').value;
+        const phone = document.getElementById('phone').value;
+        const address = document.getElementById('address').value;
+
+        // Guarda los valores en variables
+        const formData = {
+            name: name,
+            phone: phone,
+            address: address
+        };
+
+        // Muestra los datos capturados en la consola (puedes reemplazar esto con la lógica que desees)
+        console.log('Datos del formulario:', formData);
+
+        // Aquí puedes agregar la lógica para enviar los datos a un servidor, etc.
+        // Por ejemplo, utilizando fetch() para hacer una solicitud POST
+
+        // Oculta el formulario después de enviarlo
+        const orderForm = document.getElementById('order-form');
+        orderForm.style.display = 'none';
+    });
 });
