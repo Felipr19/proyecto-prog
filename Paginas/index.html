@@ -62,6 +62,40 @@
             width: 100%;
             bottom: 0;
         }
+        #cart-button {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        #cart-list {
+            display: none;
+            position: fixed;
+            top: 50px;
+            right: 10px;
+            background-color: white;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            width: 300px;
+            padding: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        #cart-list h3 {
+            margin-top: 0;
+        }
+        #cart-list ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        #cart-list li {
+            border-bottom: 1px solid #ccc;
+            padding: 5px 0;
+        }
     </style>
 </head>
 <body>
@@ -71,10 +105,19 @@
     </header>
 
     <nav>
-        <a href="#home">Inicio</a>
-        <a href="#products">Productos</a>
-        <a href="#contact">Contacto</a>
+        <a href="#Jabones">Inicio</a>
+        <a href="#Velas">Productos</a>
+        <a href="#Combos">Contacto</a>
     </nav>
+
+    <button id="cart-button">Ver Carrito</button>
+    <div id="cart-list">
+        <h3>Carrito de Compras</h3>
+        <ul id="cart-items">
+            <!-- Los productos agregados aparecerán aquí -->
+        </ul>
+    </div>
+
 
     <div class="catalog-container" id="products">
         <!-- Tarjeta de producto de ejemplo -->
@@ -83,36 +126,28 @@
             <h2>Producto 1</h2>
             <p>Descripción breve del producto.</p>
             <p><strong>Precio: $10.00</strong></p>
-            <a href="Orden.html" target="_self">
-                <button>Comprar</button>
-            </a>
+            <button onclick="addToCart('Producto 1', 10.00)">Comprar</button>
         </div>
         <div class="product-card">
             <img src="img/Lemon.png" alt="Producto 2">
             <h2>Producto 2</h2>
             <p>Descripción breve del producto.</p>
             <p><strong>Precio: $20.00</strong></p>
-            <a href="Orden.html" target="_self">
-                <button>Comprar</button>
-            </a>
+            <button onclick="addToCart('Producto 2', 20.00)">Comprar</button>
         </div>
         <div class="product-card">
             <img src="img/Jab.png" alt="Producto 1">
-            <h2>Producto 1</h2>
+            <h2>Producto 3</h2>
             <p>Descripción breve del producto.</p>
-            <p><strong>Precio: $10.00</strong></p>
-            <a href="Orden.html" target="_self">
-                <button>Comprar</button>
-            </a>
+            <p><strong>Precio: $30.00</strong></p>
+            <button onclick="addToCart('Producto 3', 30.00)">Comprar</button>
         </div>
         <div class="product-card">
             <img src="img/Minmin.png" alt="Producto 2">
-            <h2>Producto 2</h2>
+            <h2>Producto 4</h2>
             <p>Descripción breve del producto.</p>
-            <p><strong>Precio: $20.00</strong></p>
-            <a href="Orden.html" target="_self">
-                <button>Comprar</button>
-            </a>
+            <p><strong>Precio: $40.00</strong></p>
+            <button onclick="addToCart('Producto 4', 40.00)">Comprar</button>
             
         </div>
         <!-- Añade más tarjetas de productos aquí -->
@@ -122,5 +157,32 @@
         <p>&copy; 2024 Catálogo de Compras. Todos los derechos reservados.</p>
     </footer>
 
+    <script>
+        let cart = [];
+
+        function addToCart(productName, productPrice) {
+            cart.push({ name: productName, price: productPrice });
+            updateCartList();
+        }
+
+        function updateCartList() {
+            const cartItems = document.getElementById('cart-items');
+            cartItems.innerHTML = '';
+            cart.forEach(item => {
+                const li = document.createElement('li');
+                li.textContent = `${item.name} - $${item.price.toFixed(2)}`;
+                cartItems.appendChild(li);
+            });
+        }
+
+        document.getElementById('cart-button').addEventListener('click', () => {
+            const cartList = document.getElementById('cart-list');
+            if (cartList.style.display === 'none' || cartList.style.display === '') {
+                cartList.style.display = 'block';
+            } else {
+                cartList.style.display = 'none';
+            }
+        });
+    </script>
 </body>
 </html>
