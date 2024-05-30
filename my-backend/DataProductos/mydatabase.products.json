@@ -1,0 +1,66 @@
+[{
+  "_id": {
+    "$oid": "665828569b80c6298fb74dd4"
+  },
+  "name": "Jabon rosa",
+  "description": "Jabon aromatizante color rosa",
+  "price": 10000,
+  "image": "img\\Valent.png",
+  "stock": 10,
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "665829339b80c6298fb74de3"
+  },
+  "name": "Jabones limon",
+  "description": "Jabones olor a limon",
+  "price": 15000,
+  "image": "img\\Jab.png",
+  "stock": 8,
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "665829649b80c6298fb74de6"
+  },
+  "name": "Jabon almendra",
+  "description": "Jabon aroma a almendra",
+  "price": 8000,
+  "image": "img\\Lemon.png",
+  "stock": 20,
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "665829a29b80c6298fb74de9"
+  },
+  "name": "Velas pino",
+  "description": "velas aroma a pino",
+  "price": 12000,
+  "image": "img\\vela1.png",
+  "stock": 25,
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "665829c29b80c6298fb74dec"
+  },
+  "name": "Vela rosa",
+  "description": "Vela aroma a pino pero rosa",
+  "price": 10000,
+  "image": "img\\vela2.png",
+  "stock": 34,
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "665829e79b80c6298fb74def"
+  },
+  "name": "Combo de adviento",
+  "description": "velas del combo",
+  "price": 30000,
+  "image": "img\\vela3.png",
+  "stock": 5,
+  "__v": 0
+}]
