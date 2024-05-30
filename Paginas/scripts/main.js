@@ -2,13 +2,13 @@ document.addEventListener('DOMContentLoaded', () => {
     // Carrito de Compras
     let cart = [];
 
-    function addToCart(productoName, productoPrice) {
+    function addToCart(productName, productPrice) {
         try {
-            cart.push({ name: productoName, price: productoPrice });
+            cart.push({ name: productName, price: productPrice });
             updateCartList();
         } catch (error) {
             console.error('Error al añadir al carrito:', error);
-            alert('Hubo un error al añadir el productoo al carrito');
+            alert('Hubo un error al añadir el producto al carrito');
         }
     }
 
@@ -114,55 +114,54 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    async function fetchProductos() {
-        try {
-            const response = await fetch('http://localhost:3000/productos');
-            if (!response.ok) {
-                throw new Error('Error al obtener los productos');
-            }
-            const productos = await response.json();
-            console.log('Productos obtenidos:', productos);
-            displayProductos(productos);
-        } catch (error) {
-            console.error('Error al obtener los productos:', error);
-        }
-    }
-    // Función para mostrar los productos en la página
-    function displayProductos(productos) {
-        const productosContainer = document.getElementById('productos'); // Obtener el contenedor de productos en el HTML
-
-        // Limpiar el contenedor antes de agregar nuevos productos
-        productosContainer.innerHTML = '';
-
-        // Iterar sobre cada productoo y crear elementos HTML para mostrarlos
-        productos.forEach(producto => {
-            // Crear elementos HTML para cada productoo
-            const productoDiv = document.createElement('div');
-            productoDiv.classList.add('producto'); // Agregar una clase CSS para dar estilo al productoo
-
-            const productoName = document.createElement('h2');
-            productoName.textContent = producto.name;
-
-            const productoDescription = document.createElement('p');
-            productoDescription.textContent = producto.description;
-
-            const productoPrice = document.createElement('p');
-            productoPrice.textContent = `$${producto.price.toFixed(2)}`;
-
-            const productoImage = document.createElement('img');
-            productoImage.src = producto.image;
-            productoImage.alt = producto.name;
-
-            // Agregar elementos al contenedor de productos
-            productoDiv.appendChild(productoName);
-            productoDiv.appendChild(productoDescription);
-            productoDiv.appendChild(productoPrice);
-            productoDiv.appendChild(productoImage);
-
-            productosContainer.appendChild(productoDiv);
-        });
-    }
-
     fetchItems();
     fetchProductos();
 });
+
+async function fetchProductos() {
+    try {
+        const response = await fetch('http://localhost:3000/productos');
+        if (!response.ok) {
+            throw new Error('Error al obtener los productos');
+        }
+        const productos = await response.json();
+        console.log('Productos obtenidos:', productos);
+        displayProductos(productos);
+    } catch (error) {
+        console.error('Error al obtener los productos:', error);
+    }
+}
+
+function displayProductos(productos) {
+    const catalogContainer = document.getElementById('productos');
+    catalogContainer.innerHTML = ''; // Limpiar el contenedor antes de renderizar los productos
+    productos.forEach(producto => {
+        const productCard = document.createElement('div');
+        productCard.classList.add('product-card');
+
+        const productImage = document.createElement('img');
+        productImage.src = producto.image;
+        productImage.alt = producto.name;
+
+        const productName = document.createElement('h2');
+        productName.textContent = producto.name;
+
+        const productDescription = document.createElement('p');
+        productDescription.textContent = producto.description;
+
+        const productPrice = document.createElement('p');
+        productPrice.textContent = `$${producto.price.toFixed(2)}`;
+
+        const addToCartButton = document.createElement('button');
+        addToCartButton.textContent = 'Añadir al carrito';
+        addToCartButton.addEventListener('click', () => addToCart(producto.name, producto.price));
+
+        productCard.appendChild(productImage);
+        productCard.appendChild(productName);
+        productCard.appendChild(productDescription);
+        productCard.appendChild(productPrice);
+        productCard.appendChild(addToCartButton);
+
+        catalogContainer.appendChild(productCard);
+    });
+}
