@@ -24,7 +24,6 @@
     <div id="order-form">
         <h3>Formulario de Orden</h3>
         <form id="contactForm">
-            <button id="ordeal-button">Cerrar</button>
             <label for="name">Nombre:</label>
             <input type="text" id="name" name="name" required>
 
@@ -35,6 +34,7 @@
             <input type="text" id="address" name="address" required>
 
             <button type="submit">Enviar Orden</button>
+            <button type="button" class="cancel-button" onclick="closeOrderForm()">Cancelar</button>
         </form>
     </div>
 
