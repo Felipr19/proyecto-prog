@@ -21,6 +21,7 @@ const ordenSchema = new mongoose.Schema({
   name: String,
   phone: String,
   address: String,
+  cart: [{ name: String, price: Number }]
 });
 
 // Define a model
@@ -28,7 +29,6 @@ const Orden = mongoose.model('Orden', ordenSchema);
 
 // Routes
 app.get('/orden', async (req, res) => {
-    console.log('solicitud recibida en /orden')
   try {
     const orden = await Orden.find();
     res.json(orden);
@@ -37,18 +37,17 @@ app.get('/orden', async (req, res) => {
   }
 });
 
-// Ruta para manejar solicitudes POST a /items
+// Ruta para manejar solicitudes POST a /orden
 app.post('/orden', async (req, res) => {
-    try {
-      const newItemData = req.body; // Datos del nuevo elemento enviados en el cuerpo de la solicitud
-      console.log(newItemData); // Este es el console.log que mencionas
-      const newItem = await Orden.create(newItemData); // Crear un nuevo elemento en la base de datos
-      await newItem.save(); // Save the new item to the database
-      res.status(201).json(newItem); // Enviar una respuesta con el nuevo elemento creado
-    } catch (error) {
-      res.status(500).json({ message: error.message }); // Enviar una respuesta de error si ocurre algún problema
-    }
-  });
+  try {
+      const { name, phone, address, cart } = req.body; // Desestructurar datos del formulario y carrito
+      const newOrder = new Orden({ name, phone, address, cart }); // Crear nueva orden con carrito incluido
+      await newOrder.save(); // Guardar la nueva orden en la base de datos
+      res.status(201).json(newOrder); // Enviar respuesta con la nueva orden creada
+  } catch (error) {
+      res.status(500).json({ message: error.message }); // Enviar respuesta de error si ocurre algún problema
+  }
+});
   
 
 app.get('/', (req, res) => {
