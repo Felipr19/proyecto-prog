@@ -101,67 +101,53 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    async function fetchItems() {
+    async function fetchProductos() {
         try {
-            const response = await fetch('http://localhost:3000/orden');
+            const response = await fetch('http://localhost:3000/productos');
             if (!response.ok) {
-                throw new Error('Error en la solicitud');
+                throw new Error('Error al obtener los productos');
             }
-            const orden = await response.json();
-            console.log('Elementos obtenidos:', orden);
+            const productos = await response.json();
+            console.log('Productos obtenidos:', productos);
+            displayProductos(productos);
         } catch (error) {
-            console.error('Error:', error);
+            console.error('Error al obtener los productos:', error);
         }
     }
 
-    fetchItems();
+    function displayProductos(productos) {
+        const catalogContainer = document.getElementById('productos');
+        catalogContainer.innerHTML = ''; // Limpiar el contenedor antes de renderizar los productos
+        productos.forEach(producto => {
+            const productCard = document.createElement('div');
+            productCard.classList.add('product-card');
+
+            const productImage = document.createElement('img');
+            productImage.src = producto.image;
+            productImage.alt = producto.name;
+
+            const productName = document.createElement('h2');
+            productName.textContent = producto.name;
+
+            const productDescription = document.createElement('p');
+            productDescription.textContent = producto.description;
+
+            const productPrice = document.createElement('p');
+            productPrice.textContent = `$${producto.price.toFixed(2)}`;
+
+            const addToCartButton = document.createElement('button');
+            addToCartButton.textContent = 'Añadir al carrito';
+            addToCartButton.addEventListener('click', () => addToCart(producto.name, producto.price));
+
+            productCard.appendChild(productImage);
+            productCard.appendChild(productName);
+            productCard.appendChild(productDescription);
+            productCard.appendChild(productPrice);
+            productCard.appendChild(addToCartButton);
+
+            catalogContainer.appendChild(productCard);
+        });
+    }
+
     fetchProductos();
 });
-
-async function fetchProductos() {
-    try {
-        const response = await fetch('http://localhost:3000/productos');
-        if (!response.ok) {
-            throw new Error('Error al obtener los productos');
-        }
-        const productos = await response.json();
-        console.log('Productos obtenidos:', productos);
-        displayProductos(productos);
-    } catch (error) {
-        console.error('Error al obtener los productos:', error);
-    }
-}
-
-function displayProductos(productos) {
-    const catalogContainer = document.getElementById('productos');
-    catalogContainer.innerHTML = ''; // Limpiar el contenedor antes de renderizar los productos
-    productos.forEach(producto => {
-        const productCard = document.createElement('div');
-        productCard.classList.add('product-card');
-
-        const productImage = document.createElement('img');
-        productImage.src = producto.image;
-        productImage.alt = producto.name;
-
-        const productName = document.createElement('h2');
-        productName.textContent = producto.name;
-
-        const productDescription = document.createElement('p');
-        productDescription.textContent = producto.description;
-
-        const productPrice = document.createElement('p');
-        productPrice.textContent = `$${producto.price.toFixed(2)}`;
-
-        const addToCartButton = document.createElement('button');
-        addToCartButton.textContent = 'Añadir al carrito';
-        addToCartButton.addEventListener('click', () => addToCart(producto.name, producto.price));
-
-        productCard.appendChild(productImage);
-        productCard.appendChild(productName);
-        productCard.appendChild(productDescription);
-        productCard.appendChild(productPrice);
-        productCard.appendChild(addToCartButton);
-
-        catalogContainer.appendChild(productCard);
-    });
-}
