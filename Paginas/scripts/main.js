@@ -16,9 +16,9 @@ document.addEventListener('DOMContentLoaded', () => {
         try {
             const cartItems = document.getElementById('cart-items');
             cartItems.innerHTML = '';
-            cart.forEach(item => {
+            cart.forEach((item, index) => {
                 const li = document.createElement('li');
-                li.textContent = `${item.name} - $${item.price.toFixed(2)}`;
+                li.innerHTML = `${item.name} - $${item.price.toFixed(2)} <button onclick="removeFromCart(${index})">Eliminar</button>`;
                 cartItems.appendChild(li);
             });
             console.log('Carrito:', cart);
@@ -27,6 +27,13 @@ document.addEventListener('DOMContentLoaded', () => {
             alert('Hubo un error al actualizar la lista del carrito');
         }
     }
+
+    function removeFromCart(index) {
+        cart.splice(index, 1);
+        updateCartList();
+    }
+
+    window.removeFromCart = removeFromCart;
 
     try {
         const cartButton = document.getElementById('cart-button');
