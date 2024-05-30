@@ -21,7 +21,14 @@ const ordenSchema = new mongoose.Schema({
   name: String,
   phone: String,
   address: String,
-  cart: [{ name: String, price: Number }]
+  cart: [{ 
+    productId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Product'
+    },
+    name: String, 
+    price: Number 
+  }]
 });
 const Orden = mongoose.model('Orden', ordenSchema);
 
@@ -64,8 +71,21 @@ app.get('/orden', async (req, res) => {
 app.post('/orden', async (req, res) => {
   try {
     const { name, phone, address, cart } = req.body; // Desestructurar datos del formulario y carrito
-    const newOrder = new Orden({ name, phone, address, cart }); // Crear nueva orden con carrito incluido
+
+    // Mapear el carrito para que incluya el ID del producto
+    const updatedCart = await Promise.all(cart.map(async (item) => {
+      const product = await Product.findOne({ name: item.name }); // Buscar el producto por su nombre
+      return { productId: product._id, name: item.name, price: item.price };
+    }));
+
+    const newOrder = new Orden({ name, phone, address, cart: updatedCart }); // Crear nueva orden con carrito actualizado
     await newOrder.save(); // Guardar la nueva orden en la base de datos
+
+    // Actualizar la cantidad en stock de cada producto en el carrito
+    for (const item of updatedCart) {
+      await updateStock(item.productId, -1); // Restar 1 a la cantidad en stock
+    }
+
     res.status(201).json(newOrder); // Enviar respuesta con la nueva orden creada
   } catch (error) {
     res.status(500).json({ message: error.message }); // Enviar respuesta de error si ocurre algún problema
@@ -140,10 +160,6 @@ app.delete('/productos/:id', getProduct, async (req, res) => {
     res.status(500).json({ message: err.message });
   }
 });
-
-
-
-// Middleware para obtener un producto por su ID
 // Middleware para obtener un producto por su ID
 async function getProduct(req, res, next) {
   let product;
@@ -163,6 +179,25 @@ async function getProduct(req, res, next) {
 
   res.product = product;
   next();
+}
+
+// Función para actualizar la cantidad en stock de un producto
+async function updateStock(productId, quantity) {
+  try {
+    console.log('Actualizando stock para el producto con ID:', productId);
+    console.log('Cantidad a restar:', quantity);
+
+    const product = await Product.findById(productId);
+    if (product) {
+      product.stock += quantity;
+      await product.save();
+      console.log('Stock actualizado correctamente:', product);
+    } else {
+      console.log('Producto no encontrado');
+    }
+  } catch (error) {
+    console.error('Error al actualizar el stock del producto:', error);
+  }
 }
 
 
