@@ -173,13 +173,21 @@ document.addEventListener('DOMContentLoaded', () => {
     fetchProductos();
 
     function showLoadingImage() {
-    const loadingImage = document.getElementById('loadingImage');
+    var loadingImage = document.getElementById('loadingImage');
+    var loadinImage = document.getElementById('loadinImage');
     loadingImage.style.display = 'block'; // Mostrar la imagen
+    loadinImage.style.display = 'block'; // Mostrar la imagen
+    loadingImage.muted = true;
+    setTimeout(() => {
+        loadingImage.muted = false;
+    }, 1); 
 
     // Después de 3 segundos, ocultar la imagen
     setTimeout(() => {
         loadingImage.style.display = 'none';
-    }, 50); // Cambia este valor según el tiempo que quieras mostrar la imagen (en milisegundos)
+        loadingImage.muted = true;
+        loadinImage.style.display = 'none'; // Mostrar la imagen
+    }, 500); // Cambia este valor según el tiempo que quieras mostrar la imagen (en milisegundos)
 }
 
 });
