@@ -2,13 +2,13 @@ document.addEventListener('DOMContentLoaded', () => {
     // Carrito de Compras
     let cart = [];
 
-    function addToCart(productName, productPrice) {
+    function addToCart(productoName, productoPrice) {
         try {
-            cart.push({ name: productName, price: productPrice });
+            cart.push({ name: productoName, price: productoPrice });
             updateCartList();
         } catch (error) {
             console.error('Error al añadir al carrito:', error);
-            alert('Hubo un error al añadir el producto al carrito');
+            alert('Hubo un error al añadir el productoo al carrito');
         }
     }
 
@@ -114,5 +114,55 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+    async function fetchProductos() {
+        try {
+            const response = await fetch('http://localhost:3000/productos');
+            if (!response.ok) {
+                throw new Error('Error al obtener los productos');
+            }
+            const productos = await response.json();
+            console.log('Productos obtenidos:', productos);
+            displayProductos(productos);
+        } catch (error) {
+            console.error('Error al obtener los productos:', error);
+        }
+    }
+    // Función para mostrar los productos en la página
+    function displayProductos(productos) {
+        const productosContainer = document.getElementById('productos'); // Obtener el contenedor de productos en el HTML
+
+        // Limpiar el contenedor antes de agregar nuevos productos
+        productosContainer.innerHTML = '';
+
+        // Iterar sobre cada productoo y crear elementos HTML para mostrarlos
+        productos.forEach(producto => {
+            // Crear elementos HTML para cada productoo
+            const productoDiv = document.createElement('div');
+            productoDiv.classList.add('producto'); // Agregar una clase CSS para dar estilo al productoo
+
+            const productoName = document.createElement('h2');
+            productoName.textContent = producto.name;
+
+            const productoDescription = document.createElement('p');
+            productoDescription.textContent = producto.description;
+
+            const productoPrice = document.createElement('p');
+            productoPrice.textContent = `$${producto.price.toFixed(2)}`;
+
+            const productoImage = document.createElement('img');
+            productoImage.src = producto.image;
+            productoImage.alt = producto.name;
+
+            // Agregar elementos al contenedor de productos
+            productoDiv.appendChild(productoName);
+            productoDiv.appendChild(productoDescription);
+            productoDiv.appendChild(productoPrice);
+            productoDiv.appendChild(productoImage);
+
+            productosContainer.appendChild(productoDiv);
+        });
+    }
+
     fetchItems();
+    fetchProductos();
 });
