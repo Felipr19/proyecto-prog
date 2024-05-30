@@ -24,6 +24,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 <p><strong>Descripción:</strong> ${product.description}</p>
                 <p><strong>Precio:</strong> ${product.price}</p>
                 <p><strong>Imagen:</strong> <img src="${product.image}" alt="${product.name}" width="50"></p>
+                <p><strong>Stock:</strong> ${product.stock}</p>
                 <button class="edit-button" data-id="${product._id}">Editar</button>
                 <button class="delete-button" data-id="${product._id}">Eliminar</button>
             `;
@@ -48,7 +49,8 @@ document.addEventListener('DOMContentLoaded', () => {
             name: formData.get('name'),
             description: formData.get('description'),
             price: formData.get('price'),
-            image: formData.get('image')
+            image: formData.get('image'),
+            stock: formData.get('stock')
         };
 
         try {
@@ -76,8 +78,9 @@ document.addEventListener('DOMContentLoaded', () => {
         const description = prompt('Nueva descripción:', productItem.querySelector('p:nth-child(2)').textContent.split(': ')[1]);
         const price = prompt('Nuevo precio:', productItem.querySelector('p:nth-child(3)').textContent.split(': ')[1]);
         const image = prompt('Nueva URL de imagen:', productItem.querySelector('p:nth-child(4) img').getAttribute('src'));
+        const stock = prompt('Nueva cantidad en inventario:', productItem.querySelector('p:nth-child(5)').textContent.split(': ')[1]);
 
-        const productData = { name, description, price, image };
+        const productData = { name, description, price, image, stock };
 
         try {
             await fetch(`http://localhost:3000/productos/${productId}`, {
@@ -110,3 +113,4 @@ document.addEventListener('DOMContentLoaded', () => {
     // Obtener y mostrar los productos al cargar la página
     fetchProductos();
 });
+

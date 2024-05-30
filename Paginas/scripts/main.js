@@ -121,33 +121,39 @@ document.addEventListener('DOMContentLoaded', () => {
         productos.forEach(producto => {
             const productCard = document.createElement('div');
             productCard.classList.add('product-card');
-
+    
             const productImage = document.createElement('img');
             productImage.src = producto.image;
             productImage.alt = producto.name;
-
+    
             const productName = document.createElement('h2');
             productName.textContent = producto.name;
-
+    
             const productDescription = document.createElement('p');
             productDescription.textContent = producto.description;
-
+    
             const productPrice = document.createElement('p');
             productPrice.textContent = `$${producto.price.toFixed(2)}`;
-
+    
+            const productAvailability = document.createElement('p'); // Elemento para mostrar la disponibilidad
+            productAvailability.textContent = (producto.stock <= 0) ? 'No disponible' : 'Disponible'; // Condicional para mostrar disponibilidad
+    
             const addToCartButton = document.createElement('button');
             addToCartButton.textContent = 'Añadir al carrito';
             addToCartButton.addEventListener('click', () => addToCart(producto.name, producto.price));
-
+    
             productCard.appendChild(productImage);
             productCard.appendChild(productName);
             productCard.appendChild(productDescription);
             productCard.appendChild(productPrice);
+            productCard.appendChild(productAvailability); // Agregar la disponibilidad al card del producto
             productCard.appendChild(addToCartButton);
-
+    
             catalogContainer.appendChild(productCard);
         });
     }
+    
+
 
     fetchProductos();
 });

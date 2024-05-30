@@ -42,6 +42,10 @@ const productSchema = new mongoose.Schema({
   image: {
     type: String,
     required: true
+  },
+  stock: {
+    type: Number,
+    required: true
   }
 });
 const Product = mongoose.model('Product', productSchema);
@@ -84,7 +88,8 @@ app.post('/productos', async (req, res) => {
     name: req.body.name,
     description: req.body.description,
     price: req.body.price,
-    image: req.body.image
+    image: req.body.image,
+    stock: req.body.stock
   });
 
   try {
@@ -114,6 +119,9 @@ app.patch('/productos/:id', getProduct, async (req, res) => {
   if (req.body.image != null) {
     res.product.image = req.body.image;
   }
+  if (req.body.stock != null) {
+    res.product.stock = req.body.stock;
+  }
   try {
     const updatedProduct = await res.product.save();
     res.json(updatedProduct);
@@ -122,16 +130,20 @@ app.patch('/productos/:id', getProduct, async (req, res) => {
   }
 });
 
+
 // Ruta para eliminar un producto por su ID
 app.delete('/productos/:id', getProduct, async (req, res) => {
   try {
-    await res.product.remove();
+    await Product.deleteOne({ _id: res.product._id }); // Utilizar deleteOne para eliminar el producto por su ID
     res.json({ message: 'Producto eliminado' });
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
 });
 
+
+
+// Middleware para obtener un producto por su ID
 // Middleware para obtener un producto por su ID
 async function getProduct(req, res, next) {
   let product;
@@ -144,9 +156,15 @@ async function getProduct(req, res, next) {
     return res.status(500).json({ message: err.message });
   }
 
+  // Verificar si el producto es un modelo de Mongoose
+  if (!(product instanceof Product)) {
+    return res.status(500).json({ message: 'El objeto recuperado no es un producto válido' });
+  }
+
   res.product = product;
   next();
 }
+
 
 // Ruta principal
 app.get('/', (req, res) => {
