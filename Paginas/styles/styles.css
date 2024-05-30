@@ -164,3 +164,12 @@ footer {
     background-color: #f44336;
     margin-left: 10px;
 }
+
+#cart-list .cancel-button {
+    background-color: #f44336;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 5px;
+    cursor: pointer;
+}

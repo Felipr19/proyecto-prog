@@ -18,7 +18,7 @@ document.addEventListener('DOMContentLoaded', () => {
             cartItems.innerHTML = '';
             cart.forEach((item, index) => {
                 const li = document.createElement('li');
-                li.innerHTML = `${item.name} - $${item.price.toFixed(2)} <button onclick="removeFromCart(${index})">Eliminar</button>`;
+                li.innerHTML = `${item.name} - $${item.price.toFixed(2)} <button class="cancel-button" onclick="removeFromCart(${index})">Eliminar</button>`;
                 cartItems.appendChild(li);
             });
             console.log('Carrito:', cart);
