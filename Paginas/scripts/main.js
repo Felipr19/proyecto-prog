@@ -1,53 +1,4 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // Formulario de Contacto
-    const addItemForm = document.querySelector('#addItemForm');
-
-    if (addItemForm) {
-        addItemForm.addEventListener('submit', async (e) => {
-            e.preventDefault();
-
-            const name = document.querySelector('#name').value;
-            const phone = document.querySelector('#phone').value;
-            const address = document.querySelector('#address').value;
-
-            try {
-                const response = await fetch('http://localhost:3000/orden', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({ name, phone, address }),
-                });
-
-                if (!response.ok) {
-                    throw new Error('Error en la solicitud');
-                }
-
-                const newOrden = await response.json();
-                console.log('Nuevo elemento añadido:', newOrden);
-                alert('Elemento añadido con éxito');
-            } catch (error) {
-                console.error('Error:', error);
-                alert('Hubo un error al añadir el elemento');
-            }
-        });
-    }
-
-    async function fetchItems() {
-        try {
-            const response = await fetch('http://localhost:3000/orden');
-            if (!response.ok) {
-                throw new Error('Error en la solicitud');
-            }
-            const orden = await response.json();
-            console.log('Elementos obtenidos:', orden);
-        } catch (error) {
-            console.error('Error:', error);
-        }
-    }
-
-    fetchItems();
-
     // Carrito de Compras
     let cart = [];
 
@@ -69,10 +20,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 const li = document.createElement('li');
                 li.textContent = `${item.name} - $${item.price.toFixed(2)}`;
                 cartItems.appendChild(li);
-                
             });
-            console.log('Carrito:', cart)
-
+            console.log('Carrito:', cart);
         } catch (error) {
             console.error('Error al actualizar la lista del carrito:', error);
             alert('Hubo un error al actualizar la lista del carrito');
@@ -84,15 +33,17 @@ document.addEventListener('DOMContentLoaded', () => {
         cartButton.addEventListener('click', () => {
             try {
                 const cartList = document.getElementById('cart-list');
-                if (cartList.style.display === 'none' || cartList.style.display === '') {
-                    cartList.style.display = 'block';
-                } else {
-                    cartList.style.display = 'none';
-                }
+                cartList.style.display = (cartList.style.display === 'none' || cartList.style.display === '') ? 'block' : 'none';
             } catch (error) {
                 console.error('Error al mostrar/ocultar el carrito:', error);
                 alert('Hubo un error al mostrar/ocultar el carrito');
             }
+        });
+
+        const orderButton = document.getElementById('order-button');
+        orderButton.addEventListener('click', () => {
+            const orderForm = document.getElementById('order-form');
+            orderForm.style.display = 'block';
         });
     } catch (error) {
         console.error('Error al inicializar el botón del carrito:', error);
@@ -102,35 +53,66 @@ document.addEventListener('DOMContentLoaded', () => {
     // Hacer que addToCart esté disponible globalmente
     window.addToCart = addToCart;
 
-    document.getElementById('order-button').addEventListener('click', () => {
-        const orderForm = document.getElementById('order-form');
-        orderForm.style.display = 'block';
-    });
+    // Formulario de Contacto
+    const contactForm = document.querySelector('#contactForm');
 
-    document.getElementById('contactForm').addEventListener('submit', function(event) {
-        event.preventDefault(); // Evita que el formulario se envíe de la forma tradicional
+    if (contactForm) {
+        contactForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
 
-        // Captura los valores de los campos del formulario
-        const name = document.getElementById('name').value;
-        const phone = document.getElementById('phone').value;
-        const address = document.getElementById('address').value;
+            const name = document.querySelector('#name').value;
+            const phone = document.querySelector('#phone').value;
+            const address = document.querySelector('#address').value;
 
-        // Guarda los valores en variables
-        const formData = {
-            name: name,
-            phone: phone,
-            address: address
-        };
+            // Añadir carrito de compras al formulario de datos
+            const formData = { name, phone, address, cart };
 
-        // Muestra los datos capturados en la consola (puedes reemplazar esto con la lógica que desees)
-        console.log('Datos del formulario:', formData);
+            try {
+                const response = await fetch('http://localhost:3000/orden', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(formData),
+                });
 
-        // Aquí puedes agregar la lógica para enviar los datos a un servidor, etc.
-        // Por ejemplo, utilizando fetch() para hacer una solicitud POST
+                if (!response.ok) {
+                    throw new Error('Error en la solicitud');
+                }
 
-        // Oculta el formulario después de enviarlo
-        const orderForm = document.getElementById('order-form');
-        orderForm.style.display = 'none';
-    });
-    
+                const newOrden = await response.json();
+                console.log('Nuevo elemento añadido:', newOrden);
+                alert('Elemento añadido con éxito');
+
+                // Oculta el formulario después de enviarlo
+                const orderForm = document.getElementById('order-form');
+                orderForm.style.display = 'none';
+                document.getElementById('name').value = ''; // Restablecer el valor del campo nombre a vacío
+                document.getElementById('phone').value = ''; // Restablecer el valor del campo teléfono a vacío
+                document.getElementById('address').value = ''; // Restablecer el valor del campo dirección a vacío
+                const cartList = document.getElementById('cart-list')
+                cartList.style.display = 'none'
+                cart = []
+                updateCartList()
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Hubo un error al añadir el elemento');
+            }
+        });
+    }
+
+    async function fetchItems() {
+        try {
+            const response = await fetch('http://localhost:3000/orden');
+            if (!response.ok) {
+                throw new Error('Error en la solicitud');
+            }
+            const orden = await response.json();
+            console.log('Elementos obtenidos:', orden);
+        } catch (error) {
+            console.error('Error:', error);
+        }
+    }
+
+    fetchItems();
 });
