@@ -56,6 +56,23 @@ document.addEventListener('DOMContentLoaded', () => {
     // Formulario de Contacto
     const contactForm = document.querySelector('#contactForm');
 
+    try {
+        const ordenButton = document.getElementById('ordeal-button');
+        ordenButton.addEventListener('click', () => {
+            try {
+                const ordList = document.getElementById('order-form');
+                ordList.style.display = (ordList.style.display === 'none' || ordList.style.display === '') ? 'block' : 'none';
+            } catch (error) {
+                console.error('Error al mostrar/ocultar el formulario:', error);
+                alert('Hubo un error al mostrar/ocultar el formulario');
+            }
+        });
+    } catch (error) {
+        console.error('Error al inicializar el botón del carrito:', error);
+        alert('Hubo un error al inicializar el botón del carrito');
+    }
+
+
     if (contactForm) {
         contactForm.addEventListener('submit', async (e) => {
             e.preventDefault();
