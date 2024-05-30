@@ -105,6 +105,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 console.error('Error:', error);
                 alert('Hubo un error al añadir el elemento');
             }
+            showLoadingImage();
         });
     }
 
@@ -121,6 +122,7 @@ document.addEventListener('DOMContentLoaded', () => {
             console.error('Error al obtener los productos:', error);
         }
     }
+
 
     function displayProductos(productos) {
         const catalogContainer = document.getElementById('productos');
@@ -169,4 +171,15 @@ document.addEventListener('DOMContentLoaded', () => {
     window.closeOrderForm = closeOrderForm;
 
     fetchProductos();
+
+    function showLoadingImage() {
+    const loadingImage = document.getElementById('loadingImage');
+    loadingImage.style.display = 'block'; // Mostrar la imagen
+
+    // Después de 3 segundos, ocultar la imagen
+    setTimeout(() => {
+        loadingImage.style.display = 'none';
+    }, 50); // Cambia este valor según el tiempo que quieras mostrar la imagen (en milisegundos)
+}
+
 });

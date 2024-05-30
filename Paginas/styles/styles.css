@@ -173,3 +173,11 @@ footer {
     padding: 5px;
     cursor: pointer;
 }
+
+#loadingImage {
+    position: fixed;
+    top: 50%; /* Centra verticalmente */
+    left: 50%; /* Centra horizontalmente */
+    transform: translate(-50%, -50%); /* Ajusta la posición al centro */
+    z-index: 9999; /* Asegura que esté sobre otros elementos */
+}
